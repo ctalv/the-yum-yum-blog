@@ -15,6 +15,22 @@ Recipe.init(
             allowNull: false,
             primaryKey: true,
         },
+        title: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        image: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        ingredients: {
+            type: DataTypes.ARRAY(DataTypes.STRING),
+            allowNull: false
+        },
+        instructions: {
+            type: DataTypes.ARRAY(DataTypes.STRING),
+            allowNull: false
+        },
         user_id: {
             type: DataTypes.INTEGER,
             references: {
