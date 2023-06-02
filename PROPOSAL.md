@@ -4,7 +4,7 @@ The Yum Yum Blog
 
 ## Project Summary
 
-A collaborative recipe blog. A registered user can view recipes, create and modify their own recipes, and add comments to other user's recipes. A non-registered user can only view recipes. 
+A collaborative recipe blog. A registered user can view recipes and add comments to other user's recipes. A non-registered user can only view recipes. 
 
 ## Developers
 
@@ -63,11 +63,12 @@ npm packages
 
 ## MVP (Minimum Viable Product)
 
-- Create recipes
 - View recipes
 - Reviews
 
 ## Stretch Goals
 
 - Favoriting recipes
+- Create recipes
+- Edit or Delete recipes
 - Nutritional value
