@@ -1,0 +1,2 @@
+DROP DATABASE IF EXISTS yumyum_db;
+CREATE DATABASE yumyum_db;
