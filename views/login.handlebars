@@ -1,39 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<!--login page-->
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>The Yum Yum Blog - Login</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" integrity="sha512-BK0v+mqeyFyXGKfjIE8xfilK9EdeY6xI05Xe8V+ZGPe7p18AfIz8vl/4KvScFQHJAdyDqUzx7Up8qF2LbTz5cg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link rel="stylesheet" href="/public/css/jass.css">
-</head>
 
-<body>
-  <header>
-    <div class="border-container">
-      <div class="logo">
-        <img src="./images/the yum yum (2).png" alt="logo">
-      </div>
-      <h1>Discover the most effortless food blog you'll ever find!</h1>
-    </div>
-    <nav>
-      <div class="button-container">
-        <button class="btn" id="signup">Sign up</button>
-        <button class="btn" id="login">Login</button>
-      </div>
-    </nav>
-  </header>
 
-  <form action="/login" method="post">
-    <input type="text" name="username" placeholder="Username">
-    <input type="password" name="password" placeholder="Password">
-    <input type="submit" value="Login" class="search-button">
-  </form>
+<h2 class="display-7">Login</h2>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js" integrity="sha512-vl4Q1QvnGnuW6qyTMbiEEm3HseFQzD2qzqEM7yVg2KqyGqr3yp2VXd5TcYNoahEx1sMd/M9tl"></script>
-  <script src="/public/js/login.js"></script>
-</body>
-</html>
+<form class="form login-form">
+  <div class="form-group">
+    <label class="display-7" for="display_name">Name</label>
+    <input class="form-input" type="text" id="display_name" />
+  </div>
+  <div class="form-group">
+    <label class="display-7" for="password-login">Password</label>
+    <input class="form-input" type="password" id="password-login" />
+  </div>
+  <div class="form-group">
+    <button class="btn alert-dark" type="submit">Login</button>
+    <a>Sign up here----></a>
+        <a href="/signup" class="btn alert-dark" id="signupBtn">Sign Up</a>
+  </div>
+    <div class="form-group text-center">
+      </div> 
+</form>
+
+<script src="/js/login.js"></script>
