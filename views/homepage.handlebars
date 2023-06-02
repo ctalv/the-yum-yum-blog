@@ -1,12 +1,60 @@
-{{!--  --}}
+<!DOCTYPE html>
+<html lang="en">
+<!--homepage, before the user is logged in-->
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Yum Yum Blog</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" integrity="sha512-BK0v+mqeyFyXGKfjIE8xfilK9EdeY6xI05Xe8V+ZGPe7p18AfIz8vl/4KvScFQHJAdyDqUzx7Up8qF2LbTz5cg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="/public/css/jass.css">
+</head>
 
-{{#each users as |user| }}
-<div class="row align-center mb-5">
-  <div class="col-md-6">
-    <h2>{{{get_emoji}}} {{user.name}}</h2>
-  </div>
-  <div class="col-md-6">
-    <h3><a href="mailto:{{user.email}}">{{user.email}}</a></h3>
+<body>
+  <header>
+    <div class="border-container">
+      <div class="logo">
+        <img src="./images/the yum yum (2).png" alt="logo">
+      </div>
+      <h1>Discover the most effortless food blog you'll ever find!</h1>
+    </div>
+    <nav>
+      <div class="button-container">
+        <button class="btn" id="signup">Sign up</button>
+        <button class="btn" id="login">Login</button>
+      </div>
+    </nav>
+  </header>
+
+  <form action="/search" method="get">
+    <input type="text" name="query" placeholder="Get Cooking Inspiration">
+    <input type="submit" value="Find" class="search-button">
+  </form>
+
+  <h2>Explore a selection of delicious recipes crafted by diverse individuals, incorporating a wide range of ingredients from various culinary traditions.</h2>
+
+<div class="carousel-container"></div>
+<div id="recipeCarousel" class="carousel slide">
+    <div class="carousel-inner">
+      {{#each recipes}}
+      <div class="carousel-item {{#if @index === 0}}active{{/if}}">
+        <img src="{{this.image}}" class="d-block w-100" alt="{{this.alt}}">
+      </div>
+      {{/each}}
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#recipeCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#recipeCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
   </div>
 </div>
-{{/each}}
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js" integrity="sha512-vl4Q1QvnGnuW6qyTMbiEEm3HseFQzD2qzqEM7yVg2KqyGqr3yp2VXd5TcYNoahEx1sMd/M9tl"></script>
+  <script src="./public/js/index.js"></script>
+</body>
+</html>
