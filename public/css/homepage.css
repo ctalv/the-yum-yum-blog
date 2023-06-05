@@ -9,120 +9,123 @@ body {
 }
 
 .backgroundimage {
-  position: fixed;
-  width: 100vw;
-  height: 100vh;
+  position: fixed; /* Change from 'absolute' to 'fixed' */
   top: 0;
   left: 0;
-  background-size: contain;
+  width: 100vw;
+  height: 100vh;
+  background-size: cover; /* Change from 'contain' to 'cover' */
   background-repeat: no-repeat;
   background-position: center;
   z-index: -30;
+  opacity: 0.1;
 }
 
 .backgroundimage img {
   width: 100%;
   height: 100%;
+  object-fit: cover; /* Add this property to ensure the image covers the entire container */
 }
 
-.header {
+.container-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 40px;
+  position: relative; /* Add position relative */
+  z-index: 1;
+}
+
+.search-form {
+  position: relative;
   display: flex;
   align-items: center;
-  height: 100px;
-  position: relative;
-  z-index: 1;
-  border-bottom: 10px solid #F76507;
+  margin-left: 500px;
+  margin-top: 10px;
 }
 
-form {
-  display: flex;
-  justify-content: flex-end;
-  margin-right: 10px;
-  margin-top: 40px;
-  border-radius: 100px;
-  flex-grow: 1;
-  margin-left: 10px;
-  }
-
-
 .search-input {
-  padding: 10px;
-  border: 1px solid #000000;
+  padding-left: 35px;
+  background-color: rgba(141, 141, 141, 0.628);
+  border: none; /* Remove the border */
+  border-radius: 5px;
+  color: rgb(37, 37, 37);
+}
+
+.fa-utensils {
+  position: absolute;
+  top: 50%;
+  left: 8px;
+  transform: translateY(-50%);
+  color: #f76307ed;
   font-size: 16px;
 }
 
-.search-button {
-  padding: 5px 10px;
-  color: #000000;
-  border: none;
-  border-radius: 100px;
-  cursor: pointer;
-  font-size: 10px;
-  color: #ffffff;
-  background-color: #F76507;
-  border: 1px solid #712628;
-  margin-left: 5px;
-}
-
-/* .border-container {
+.homepageheader {
   display: flex;
   align-items: center;
-  border-bottom: 30px solid #ebc642d7;
-  position: relative;
-  width: 100%;
+  flex-direction: row; /* Update to row */
+  margin-top: 20px; /* Adjust the margin-top value */
+  border-bottom: 2px solid #F76507;
+}
+
+.logo {
+  order: 2; /* Change the order to 2 */
   margin-top: -20px;
-} */
+  margin-right: 100px; /* Update margin-right to margin-left */
+}
 
 .logo img {
-  max-width: 150px;
-  margin-top: 2px;
+  max-width: 175px;
 }
 
 h1 {
-  width: auto;
-  /* Remove fixed width */
-  font-family: 'Inter';
-  font-style: italic;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-  font-weight: 100;
+  font-weight: normal; /* Change font-weight to normal */
   font-size: 30px;
   line-height: 29px;
+  margin-left: 500px;
+  word-wrap: break-word;
   text-align: center;
-  margin-left: -10px;
-  white-space: nowrap;
+  margin-bottom: 10px;
+  color: #F76507;
 }
 
 .button-container {
-  display: flex;
-  align-items: center;
   position: absolute;
-  top: 20%;
-  transform: translateY(-50%);
-  right: 0;
-  margin-right: 20px;
+  top: 10px;
+  left: 20px;
 }
 
 .btn {
   margin-right: 10px;
-  color: #ffffff;
-  background-color: #F76507;
-  border: none;
+  color: #F76507;
   padding: 5px 10px;
-  border-radius: 2px;
   font-family: 'Inter';
   font-size: 15px;
   font-weight: 500;
-  border: 1px solid #712628;
-  border-radius: 100px;
+  position: relative; /* Add position relative */
 }
 
-.btn:hover {
-  cursor: pointer;
-  background-color: #712628;
+.btn::after {
+  content: "";
+  position: absolute;
+  bottom: -3px; /* Adjust the distance of the line from the button text */
+  left: 0;
+  width: 100%;
+  height: 2px; /* Adjust the height of the line */
+  background-color: #F76507;
+  transform: scaleX(0); /* Initially hide the line */
+  transition: transform 0.3s ease-in-out;
+}
+
+.btn:hover::after {
+  transform: scaleX(1); /* Show the line on hover */
 }
 
 h2 {
   margin-top: 10px;
+  margin-bottom: 50px;
   font-family: 'Inter';
   font-style: italic;
   font-weight: 100;
@@ -133,16 +136,13 @@ h2 {
 .carousel-item img {
   max-width: 100px;
   max-height: 100px;
+  align-items: center;
+  display: block;
+  margin: 0 auto;
 }
 
 .carousel-container {
-  display: inline-block; /* Add display property */
-  vertical-align: top; /* Align containers vertically */
-  background-color: #f8dd12ea;
-  padding: 30px;
-  margin: 10px 20px; /* Adjust margin for spacing */
-  max-width: 500px;
-  border-radius: 20px;
+  position: relative; 
 }
 
 .signup-container {
@@ -162,33 +162,89 @@ h2 {
   margin-bottom: 10px;
 }
 
-form {
-  flex-grow: 1;
-  margin-left: 10px;
-}
-
 .signup-container form {
   display: flex;
-  flex-direction: column; /* Display inputs vertically */
+  flex-direction: column;
 }
 
 .signup-container input,
 .signup-container button {
-  margin-bottom: 5px; /* Add spacing between inputs */
+  margin-bottom: 5px;
   border-radius: 5px;
-  background-color:  #f7630729;
+  background-color: #f7630729;
 }
 
-p{ 
+p {
   margin-bottom: 10px;
 }
 
-/* Adjustments for the yellow border */
 .border-container {
-  margin-bottom: -30px;
+  margin-bottom: -60px;
 }
 
-.backgroundimage {
-  top: 155px;
-  opacity: .4;
+.floating-tab {
+  position: absolute;
+  top: -20px; /* Adjust the top position to move the tab to the top edge */
+  left: -100px; /* Change 'right' to 'left' to position the tab on the left side */
+  width: 140px;
+  height: 30px;
+  font-size: 19px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 10; /* Add the z-index property */
+}
+.floating-tab2 {
+  position: absolute;
+  top: -20px; /* Adjust the top position to move the tab to the top edge */
+  left: -100px; /* Change 'right' to 'left' to position the tab on the left side */
+  width: 140px;
+  height: 30px;
+  font-size: 19px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 10; /* Add the z-index property */
+}
+
+
+
+.recipe-container {
+  position: relative;
+  z-index: 2;
+}
+
+.background-box {
+  position: absolute;
+  bottom: -10px;
+  right: 350px;
+  width: 460px;
+  height: 360px;
+  background-color: #f76307cd;
+  z-index: -1; /* Change the z-index to -1 */
+}
+
+.carousel-container,
+.recipe-container {
+  flex: 1;
+  margin: 10px;
+  background-color: #d6d6d6;
+  padding: 30px;
+  max-width: 500px;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+  opacity: 0.7; /* Adjust the opacity to make it slightly darker */
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-color: #00000089; /* Set the color of the arrow */
+}
+
+.yellow-footer {
+  background-color: #F76507;
+  padding: 20px;
+  text-align: center;
+  color: white;
+  opacity: .8;
 }
