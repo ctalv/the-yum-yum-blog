@@ -60,6 +60,8 @@ router.get('/', async (req, res) => {
           recipes.push(recipe); // Add each recipe to the recipes array
         }
 
+        
+        req.session.recipes = recipes;
         // console.log(recipes)
         res.render('homepage', { 
           recipes: recipes,
@@ -76,24 +78,26 @@ router.get('/', async (req, res) => {
 });
 
 
+// const urlTwo = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&query=${mainCourseQuery}&addRecipeInformation=${addRecipeInformation}&fillIngredients=${fillIngredients}`;
 
 router.get('/recipe/:id', async (req, res) => {
   try {
-    const projectData = await Project.findByPk(req.params.id, {
-      include: [
-        {
-          model: User,
-          attributes: ['name'],
-        },
-      ],
+    const recipeId = await req.params.id
+    const recipes = await req.session.recipes;
+    // console.log(recipe.id)
+    const recipe = recipes.find(recipe => recipe.id === parseInt(recipeId));
+    const ingredients = recipe.ingredients.split(' ; '); 
+    const instructions = recipe.instructions.split(' ; ');
+    console.log(ingredients)
+    console.log(recipe)
+    // const recipe = recipeData.get({ plain: true });
+    // res.status(200).json(recipe);
+    res.render('recipe', {
+      ...recipe,
+      // logged_in: req.session.logged_in
+      ingredients: ingredients,
+      instructions: instructions
     });
-
-    const project = projectData.get({ plain: true });
-
-    // res.render('project', {
-    //   ...project,
-    //   logged_in: req.session.logged_in
-    // });
   } catch (err) {
     res.status(500).json(err);
   }
