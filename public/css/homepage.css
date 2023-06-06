@@ -102,7 +102,7 @@ h1 {
   color: #F76507;
   padding: 5px 10px;
   font-family: 'Inter';
-  font-size: 15px;
+  font-size: 22px;
   font-weight: 500;
   position: relative; /* Add position relative */
 }
@@ -244,15 +244,6 @@ p {
   z-index: 2;
 }
 
-.background-box {
-  position: absolute;
-  bottom: -10px;
-  right: 350px;
-  width: 460px;
-  height: 360px;
-  background-color: #f76307cd;
-  z-index: -1; /* Change the z-index to -1 */
-}
 
 .carousel-container,
 .recipe-container {
@@ -274,7 +265,7 @@ p {
 }
 h3 {
   font-weight: 100;
-  font-size: 35px;
+  font-size: 40px;
 }
 
 .yellow-footer {
@@ -286,7 +277,7 @@ h3 {
   font-weight: 100;
 }
 p {
-  font-size: 15px;
+  font-size: 20px;
   margin-bottom: 10px;
   font-weight: 100;
 }
