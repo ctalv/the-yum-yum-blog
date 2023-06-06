@@ -6,25 +6,27 @@
   <div class="recipe-container">
     <div class="floating-tab">Popular For You!</div>
     <div class="recipe-card">
-      
-<a href="/recipe/{{this.id}}" class="btn"><h3>{{this.title}}</h3></a>
+
+      <a href="/recipe/{{this.id}}" class="btn">
+        <h3>{{this.title}}</h3>
+      </a>
 
     </div>
     <div class="carousel-container">
       <div id="recipeCarousel1" class="carousel slide">
         <div class="carousel-inner">
-         
+
           <div class="carousel-item active">
             <img src="{{this.image}}" class="d-block w-100" alt="Placeholder Recipe 1">
           </div>
-         
+
           <div class="carousel-item">
             <img src="/images/img2.jpeg" class="d-block w-100" alt="Placeholder Recipe 2">
           </div>
           <div class="carousel-item">
             <img src="/images/img3.webp" class="d-block w-100" alt="Placeholder Recipe 3">
           </div>
-         
+
           <div class="carousel-item">
             <img src="/images/img2.jpeg" class="d-block w-100" alt="Placeholder Recipe 2">
           </div>
@@ -45,6 +47,3 @@
   </div>
 </div>
 {{/each}}
-<script src="/js/search.js"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/handlebars/dist/handlebars.min.js"></script>
