@@ -61,12 +61,12 @@ router.get('/', async (req, res) => {
           recipes.push(recipe); // Add each recipe to the recipes array
         }
 
-        
+
         req.session.recipes = recipes;
         // console.log(recipes)
-        res.render('homepage', { 
+        res.render('homepage', {
           recipes: recipes,
-         }); 
+        });
         // res.status(200).json(recipes);
       })
       .catch(error => {
@@ -87,7 +87,7 @@ router.get('/recipe/:id', async (req, res) => {
     const recipes = await req.session.recipes;
     // console.log(recipe.id)
     const recipe = recipes.find(recipe => recipe.id === parseInt(recipeId));
-    const ingredients = recipe.ingredients.split(' ; '); 
+    const ingredients = recipe.ingredients.split(' ; ');
     const instructions = recipe.instructions.split(' ; ');
     console.log(ingredients)
     console.log(recipe)
@@ -131,9 +131,10 @@ router.get('/dashboard', withAuth, async (req, res) => {
       where: {
         id: req.session.user_id,
       },
-      include: [
-        Recipe
-      ]
+      attributes: { exclude: ['password'] },
+      include: [{ model: Recipe }]
+
+
     })
 
     if (!userData) {
@@ -145,12 +146,16 @@ router.get('/dashboard', withAuth, async (req, res) => {
       return;
     }
 
+    const user = userData.get({ plain: true });
+    const recipes = user.Recipes;
+    console.log(recipes);
+
     res.render('dashboard', {
       ...user,
       logged_in: req.session.logged_in
     });
 
-    res.status(200).json(userData)
+    // res.status(200).json({ user });
   } catch (err) {
     res.status(500).json(err)
   }
