@@ -63,6 +63,7 @@ router.get('/', async (req, res) => {
 
 
         req.session.recipes = recipes;
+        
         // console.log(recipes)
         res.render('homepage', {
           recipes: recipes,
@@ -97,7 +98,8 @@ router.get('/recipe/:id', async (req, res) => {
       ...recipe,
       // logged_in: req.session.logged_in
       ingredients: ingredients,
-      instructions: instructions
+      instructions: instructions,
+      notSaved: req.path.startsWith('/recipe/')
     });
   } catch (err) {
     res.status(500).json(err);
@@ -143,14 +145,18 @@ router.get('/dashboard', withAuth, async (req, res) => {
 
 // post route for saving a recipe
 router.post('/dashboard', async (req, res) => {
+  
   try {
-    const { id, title, image, ingredients, instructions } = req.body;
+   
+    const recipes = await req.session.recipes;
+    const recipeId = req.body;
+    const recipe = recipes.find(recipe => recipe.id === parseInt(recipeId));
+
+
+    console.log(ingredients)
+    console.log(recipe)
     const recipeData = await Recipe.create({
-      id,
-      title,
-      image,
-      ingredients,
-      instructions,
+      recipe,
       user_id: req.session.user_id,
     });
     res.status(200).json(recipeData);
