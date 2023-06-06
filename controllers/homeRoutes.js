@@ -146,17 +146,20 @@ router.get('/dashboard', withAuth, async (req, res) => {
   
 router.post('/dashboard', async (req, res) => {
   console.log('/dashboard route triggered');
-  const { id, title, image, ingredients, instructions } = req.body;
+  console.log(req.body)
+  const { recipe_id, title, image, ingredients, instructions } = req.body;
   try {
-
-    const existingRecipe = await Recipe.findByPk(id);
+    console.log('1')
+    console.log(recipe_id)
+    const existingRecipe = await Recipe.findByPk(recipe_id);
 console.log(existingRecipe)
+console.log('no')
     if (existingRecipe) {
       // If the recipe already exists, return an error message or take appropriate action
       return res.redirect('/dashboard');
     } else {
       const recipeData = await Recipe.create({
-        id,
+        id: recipe_id,
         title,
         image,
         ingredients,
