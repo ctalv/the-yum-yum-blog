@@ -20,6 +20,7 @@ router.get('/', async (req, res) => {
       .then(data => {
         // console.log(data);
         // id, title, ingredients, instruction, photo
+        // console.log(data.results.length)
         const recipes = [];
         for (let i = 0; i < data.results.length; i++) {
           let recipeNum = data.results[i];
@@ -60,10 +61,12 @@ router.get('/', async (req, res) => {
           recipes.push(recipe); // Add each recipe to the recipes array
         }
 
+
+        req.session.recipes = recipes;
         // console.log(recipes)
-        res.render('homepage', { 
+        res.render('homepage', {
           recipes: recipes,
-         }); 
+        });
         // res.status(200).json(recipes);
       })
       .catch(error => {
@@ -76,54 +79,111 @@ router.get('/', async (req, res) => {
 });
 
 
+// const urlTwo = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&query=${mainCourseQuery}&addRecipeInformation=${addRecipeInformation}&fillIngredients=${fillIngredients}`;
 
 router.get('/recipe/:id', async (req, res) => {
   try {
-    const projectData = await Project.findByPk(req.params.id, {
-      include: [
-        {
-          model: User,
-          attributes: ['name'],
-        },
-      ],
+    const recipeId = await req.params.id
+    const recipes = await req.session.recipes;
+    // console.log(recipe.id)
+    const recipe = recipes.find(recipe => recipe.id === parseInt(recipeId));
+    const ingredients = recipe.ingredients.split(' ; ');
+    const instructions = recipe.instructions.split(' ; ');
+    console.log(ingredients)
+    console.log(recipe)
+    // const recipe = recipeData.get({ plain: true });
+    // res.status(200).json(recipe);
+    res.render('recipe', {
+      ...recipe,
+      // logged_in: req.session.logged_in
+      ingredients: ingredients,
+      instructions: instructions
     });
-
-    const project = projectData.get({ plain: true });
-
-    // res.render('project', {
-    //   ...project,
-    //   logged_in: req.session.logged_in
-    // });
   } catch (err) {
     res.status(500).json(err);
   }
 });
 
-// Use withAuth middleware to prevent access to route
-// favorited routes
-router.get('/profile', async (req, res) => {
+
+router.get('/dashboard', withAuth, async (req, res) => {
   try {
-    // Find the logged in user based on the session ID
-    const userData = await User.findByPk(req.session.user_id, {
+    const userData = await User.findOne({
+      where: {
+        id: req.session.user_id,
+      },
       attributes: { exclude: ['password'] },
-      include: [{ model: Project }],
-    });
+      include: [{ model: Recipe }]
+
+
+    })
+
+    if (!userData) {
+      res.status(404).json({ message: 'No user with that id.' })
+      return
+    }
+    if (!req.session.logged_in) {
+      res.redirect('/login');
+      return;
+    }
 
     const user = userData.get({ plain: true });
+    const recipes = user.Recipes;
+    console.log(recipes);
 
-    // res.render('profile', {
-    //   ...user,
-    //   logged_in: true
-    // });
+    res.render('dashboard', {
+      ...user,
+      logged_in: req.session.logged_in
+    });
+
+    // res.status(200).json({ user });
+  } catch (err) {
+    res.status(500).json(err)
+  }
+})
+
+// post route for saving a recipe
+router.post('/dashboard', async (req, res) => {
+  try {
+    const { id, title, image, ingredients, instructions } = req.body;
+    const recipeData = await Recipe.create({
+      id,
+      title,
+      image,
+      ingredients,
+      instructions,
+      user_id: req.session.user_id,
+    });
+    res.status(200).json(recipeData);
+  } catch (err) {
+    res.status(400).json(err)
+  }
+});
+
+router.get('/dashboard/recipe/:id', async (req, res) => {
+  try {
+    const recipeData = await Recipe.findByPk(req.params.id)
+
+    const recipe = recipeData.get({ plain: true });
+    const ingredients = recipe.ingredients.split(' ; ');
+    const instructions = recipe.instructions.split(' ; ');
+    // const recipe = recipeData.get({ plain: true });
+    // res.status(200).json(recipe);
+    res.render('recipe', {
+      ...recipe,
+      logged_in: req.session.logged_in,
+      ingredients: ingredients,
+      instructions: instructions
+    });
   } catch (err) {
     res.status(500).json(err);
   }
 });
+
 
 router.get('/login', (req, res) => {
   // If the user is already logged in, redirect the request to another route
   if (req.session.logged_in) {
-    res.redirect('/');
+    res.redirect('/dashboard');
     return;
   }
 
