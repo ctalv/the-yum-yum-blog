@@ -23,12 +23,11 @@
       </form>
     </div>
     <div class="logo">
-      <img src="./images/the yum yum (2).png" alt="logo">
+      <img src="./public/images/the yum yum (2).png" alt="logo">
     </div>
     <nav>
       <div class="button-container">
         <a href="/" class="btn">Home</a>
-        <a href="./login.index.html" class="btn">Sign up</a>
         <a href="./login.index.html" class="btn">Login</a>
         <a href="/recipes" class="btn">List Recipes</a>
         <span id="username"></span>
@@ -37,7 +36,7 @@
 
   <main>
     <div class="backgroundimage">
-      <img src="images/cooking-icons-seamless-pattern_98292-4834.avif">
+      <img src="./public/images/cooking-icons-seamless-pattern_98292-4834.avif">
      </div>
 
 
@@ -45,7 +44,7 @@
   <div class="container-wrapper">
     <div class="background-box"></div>
     <div class="recipe-container">
-      <div class="floating-tab">Pouplar For You!</div>
+      <div class="floating-tab"><span>&vert; Popular For You!</div></span>
       <div class="recipe-card">
         <h3>Recipe Title</h3>
         <ul class="ingredients-list">
@@ -53,6 +52,9 @@
           <li>Ingredient 2</li>
         </ul>
         <p>Recipe instructions...</p>
+        <div class="view-more">
+          <button class="view-more-button">View More</button>
+        </div>
       </div>
       <div class="carousel-container">
         <div id="recipeCarousel1" class="carousel slide">
@@ -83,7 +85,7 @@
   <div class="container-wrapper">
     <div class="background-box"></div>
     <div class="recipe-container">
-      <div class="floating-tab2">New Recipe</div>
+      <div class="floating-tab2"><span>&vert; New Recipe</span></div>
       <div class="recipe-card">
         <h3>Recipe Title</h3>
         <ul class="ingredients-list">
@@ -160,6 +162,7 @@
 <footer class="yellow-footer">
   <h3>Eat, Cook, Repeat</h3>
   <p>Explore the Best Recipes Here!</p>
+  <p>The Yum Yum Blog 2023©</p>
 </footer>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.min.js" integrity="sha512-vl4Q1QvnGnuW6qyTMbiEEm3HseFQ"></script>
