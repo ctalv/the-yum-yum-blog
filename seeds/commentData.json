@@ -1,21 +1,23 @@
 [
-    {
-      "title": "Tasted delicous",
-      "text": "Best thing I ever ate!",
-      "date_created": "05/29/2020",
-      "user_id": 1
-    },
-    {
-      "title": "Terribel",
-      "text": "I would not wish this on my worst enemy",
-      "date_created": "05/29/2020",
-      "user_id": 2
-    },
-    {
-      "title": "Good",
-      "text": "It was pretty good! I added a little more salt and some lemon juice.",
-      "date_created": "05/29/2020",
-      "user_id": 3
-    }
-  ]
-  
+  {
+    "title": "Tasted delicous",
+    "text": "Best thing I ever ate!",
+    "date_created": "05/29/2020",
+    "recipe_id": 645843,
+    "user_id": 1
+  },
+  {
+    "title": "Terribel",
+    "text": "I would not wish this on my worst enemy",
+    "date_created": "05/29/2020",
+    "recipe_id": 640921,
+    "user_id": 2
+  },
+  {
+    "title": "Good",
+    "text": "It was pretty good! I added a little more salt and some lemon juice.",
+    "date_created": "05/29/2020",
+    "recipe_id": 640921,
+    "user_id": 3
+  }
+]
