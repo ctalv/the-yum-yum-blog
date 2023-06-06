@@ -1,13 +1,18 @@
 [
-    {
-      "id": 645843,
-      "title": "Grilled Romaine Salad with Bacon and Blue Cheese",
-      "image": "https://spoonacular.com/recipeImages/645843-312x231.jpg",
-      "user_id": 1
-    },
-    {
-        "id": 715538,
-        "user_id": 2
-    }
+  {
+    "id": 645843,
+    "title": "Grilled Romaine Salad with Bacon and Blue Cheese",
+    "image": "https://spoonacular.com/recipeImages/645843-312x231.jpg",
+    "ingredients": "0.5 lb bacon ; 0.5 cup balsamic vinegar ; 0.5 cup cheese ; 0.5 cup onion ; 3 head romaine lettuce",
+    "instructions": "Heat 1 Tablespoon of olive and cook bacon and onion until bacon is crispy. ; Remove onion and bacon from pan. ; Add 1 more Tablespoon of olive oil and balsamic vinegar. ; Let mixture reduce for 2 to 3 minutes.Slice lettuce down the center ; Brush both sides with remaining olive  oil ; Sprinkle with salt and pepper ; Place on the grill ; Grill on both sides until browned (a few minutes per side). ; Drizzle lettuce halves with balsamic dressing and sprinkle with cheese, bacon, and onion.",
+    "user_id": 1
+  },
+  {
+    "id": 640921,
+    "title": "Stuffed Artichoke Main Dish",
+    "image": "https://spoonacular.com/recipeImages/640921-312x231.jpg",
+    "ingredients": "1  artichoke ; 2  chicken breasts ; 2 cloves garlic ; 1  lemon ; 1 tsp maple syrup ; 1 tsp parmesan ; 2 servings bell pepper ; 1 large potato ; 1 sprig rosemary ; 1 handful mozzarella cheese",
+    "instructions": "Pull apart center leaves of artichoke ; Cut the center so that you take the prickly center ; Use spoon to get all that out so you only have the center being empty ; Add a bit of lemon juice to make sure it doesn't change color ; Add artichoke to boiling water ; Let boil for 10 min so it gets kind of soft ; Take out ; Add cold water so it cools ; Cut the edges of artichoke ; How to make the stuffing.Boil the potato, or put into microwave to cook it up. (it just needs to be soft)In a sauce pan at med-high heat add the olive oil, rosemary, maple syrup, crushed and finely sliced garlic and the chicken. ; Add the lemon sliced  up to the saucepan and cook it all together for for 15 min. So that it is all cooked up.  and put it onto a plate to cool.Now there should be some sauce still left in the pan, so slice the cooked potatoe and add it to the pan to get all that tasty sauce.Now cut up the chicken, potato and some grated mozzarella cheese and mash it up so that you can stuff it into the artichoke. ; Bake in oven at 350 for 20ish min.",
+    "user_id": 2
+  }
 ]
-  

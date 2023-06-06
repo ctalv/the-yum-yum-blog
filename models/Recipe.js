@@ -24,11 +24,11 @@ Recipe.init(
             allowNull: false
         },
         ingredients: {
-            type: DataTypes.ARRAY(DataTypes.STRING),
+            type: DataTypes.TEXT,
             allowNull: false
         },
         instructions: {
-            type: DataTypes.ARRAY(DataTypes.STRING),
+            type: DataTypes.TEXT,
             allowNull: false
         },
         user_id: {
