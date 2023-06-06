@@ -3,13 +3,16 @@ const Comment = require('./Comment');
 const Recipe = require('./Recipe');
 
 // User has many Recipes
-User.belongsToMany(Recipe, { 
-  through: 'SavedRecipes'
+User.hasMany(Recipe, { 
+  // through: 'SavedRecipes',
+  foreignKey: 'user_id',
+  // sourceKey: 'id'
 });
 
 // Recipe (fetched) has many User
-Recipe.belongsToMany(User, {
-  through: 'SavedRecipes'
+Recipe.belongsTo(User, {
+  // through: 'SavedRecipes',
+  foreignKey: 'user_id'
 });
 
 // User has many Comment
