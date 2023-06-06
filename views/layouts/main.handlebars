@@ -1,38 +1,60 @@
-{{!-- what the user will view when logging in --}}
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>User Registry</title>
-  <link rel="stylesheet" href="/css/jass.css">
+  <title>The Yum Yum Blog</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/homepage.css">
 </head>
 
 <body>
-  <header class="display-flex justify-space-between align-center p-2">
-    <h1>
-      The Yum-Yum Blog
-    </h1>
-
-    {{#if logged_in}}
+  <header>
+  <div class="homepageheader">
+    <div class="header-content">
+      <h1>Discover Recipes<br>& Delicious Food!</h1>
+      <form action="/search" method="get" class="search-form">
+        <input type="text" name="query" placeholder="Get Cooking Inspiration" class="search-input">
+        <i class="fas fa-utensils" aria-hidden="true"></i>
+      </form>
+    </div>
+    <div class="logo">
+      <img src="/images/the yum yum (2).png" alt="logo">
+    </div>
     <nav>
-      <button class="btn" id="logout">logout</button>
-    </nav>
-    {{/if}}
-  </header>
-  <main class="container container-fluid mt-5">
-    {{{ body }}}
+      <div class="button-container">
+        <a href="/" class="btn">Home</a>
+        <a href="/login" class="btn">Login</a>
+        <a href="/recipes" class="btn">List Recipes</a>
+        <span id="username"></span>
+      </div>
+</header>
+
+  <main>
+    <div class="backgroundimage">
+      <img src="/images/cooking-icons-seamless-pattern_98292-4834.avif">
+    </div>
+    {{{body}}}
   </main>
-  <footer>
-      
+
+  <footer class="yellow-footer">
+    <h3>Eat, Cook, Repeat</h3>
+    <p>Explore the Best Recipes Here!</p>
   </footer>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.min.js"
+    integrity="sha512-vl4Q1QvnGnuW6qyTMbiEEm3HseFQ"></script>
+  <script src="/js/index.js"></script>
+  <script src="/js/login.js"></script>
 
+  <!-- Render script for logged in users only -->
   {{#if logged_in}}
   <script src="/js/logout.js"></script>
   {{/if}}
-</body>
-
+  
+  </body>
+  
 </html>
