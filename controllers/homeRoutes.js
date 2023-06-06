@@ -104,26 +104,6 @@ router.get('/recipe/:id', async (req, res) => {
   }
 });
 
-// Use withAuth middleware to prevent access to route
-// favorited routes
-router.get('/profile', async (req, res) => {
-  try {
-    // Find the logged in user based on the session ID
-    const userData = await User.findByPk(req.session.user_id, {
-      attributes: { exclude: ['password'] },
-      include: [{ model: Project }],
-    });
-
-    const user = userData.get({ plain: true });
-
-    // res.render('profile', {
-    //   ...user,
-    //   logged_in: true
-    // });
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
 
 router.get('/dashboard', withAuth, async (req, res) => {
   try {
@@ -162,15 +142,40 @@ router.get('/dashboard', withAuth, async (req, res) => {
 })
 
 // post route for saving a recipe
-router.post('/save-favorite', async (req, res) => {
+router.post('/dashboard', async (req, res) => {
   try {
+    const { id, title, image, ingredients, instructions } = req.body;
     const recipeData = await Recipe.create({
-      // recipe 
+      id,
+      title,
+      image,
+      ingredients,
+      instructions,
       user_id: req.session.user_id,
     });
     res.status(200).json(recipeData);
   } catch (err) {
     res.status(400).json(err)
+  }
+});
+
+router.get('/dashboard/recipe/:id', async (req, res) => {
+  try {
+    const recipeData = await Recipe.findByPk(req.params.id)
+
+    const recipe = recipeData.get({ plain: true });
+    const ingredients = recipe.ingredients.split(' ; ');
+    const instructions = recipe.instructions.split(' ; ');
+    // const recipe = recipeData.get({ plain: true });
+    // res.status(200).json(recipe);
+    res.render('recipe', {
+      ...recipe,
+      logged_in: req.session.logged_in,
+      ingredients: ingredients,
+      instructions: instructions
+    });
+  } catch (err) {
+    res.status(500).json(err);
   }
 });
 
