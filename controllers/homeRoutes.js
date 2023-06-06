@@ -143,27 +143,36 @@ router.get('/dashboard', withAuth, async (req, res) => {
   }
 })
 
-// post route for saving a recipe
-router.post('/dashboard', async (req, res) => {
   
+router.post('/dashboard', async (req, res) => {
+  console.log('/dashboard route triggered');
+  const { id, title, image, ingredients, instructions } = req.body;
   try {
-   
-    const recipes = await req.session.recipes;
-    const recipeId = req.body;
-    const recipe = recipes.find(recipe => recipe.id === parseInt(recipeId));
 
-
-    console.log(ingredients)
-    console.log(recipe)
-    const recipeData = await Recipe.create({
-      recipe,
-      user_id: req.session.user_id,
-    });
-    res.status(200).json(recipeData);
+    const existingRecipe = await Recipe.findByPk(id);
+console.log(existingRecipe)
+    if (existingRecipe) {
+      // If the recipe already exists, return an error message or take appropriate action
+      return res.redirect('/dashboard');
+    } else {
+      const recipeData = await Recipe.create({
+        id,
+        title,
+        image,
+        ingredients,
+        instructions,
+        user_id: req.session.user_id
+      });
+      res.status(200).json(recipeData);
+    }
+    
+ 
+  
+    
   } catch (err) {
-    res.status(400).json(err)
+    res.status(400).json(err + 2)
   }
-});
+  });
 
 router.get('/dashboard/recipe/:id', async (req, res) => {
   try {

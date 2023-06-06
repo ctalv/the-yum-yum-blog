@@ -6,9 +6,9 @@
 
     <div class="container-wrapper">
       <div class="recipe-container">
-        <h2>{{title}}</h2>
+        <h2 class="title-el">{{title}}</h2>
         <div class="recipe-image" id="recipe-image-container">
-          <img src="{{image}}" >
+          <img class="image-el" src="{{image}}" >
         </div>
         <div class="recipe-details">
             {{#if notSaved}}
@@ -17,14 +17,14 @@
               </button>
               {{/if}}
           <h3>Ingredients</h3>
-          <ul>
+          <ul class="ingredient-el">
             {{#each ingredients as |ingredient|}}
             <li>{{ingredient}}</li>
             {{/each}}
             <!-- Add more ingredients as needed -->
           </ul>
           <h3>Instructions</h3>
-          <ol>
+          <ol class="instruction-el">
            {{#each instructions as |instruction|}}
             <li>{{instruction}}</li>
             {{/each}}
