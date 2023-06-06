@@ -4,6 +4,7 @@ const express = require('express');
 const session = require('express-session');
 const exphbs = require('express-handlebars');
 const routes = require('./controllers');
+const bodyParser = require('body-parser');
 // const helpers = require('./utils/helpers');
 
 const sequelize = require('./config/connection');
@@ -33,6 +34,7 @@ const sess = {
   };
 
 // middleware
+app.use(bodyParser.json());
 app.use(session(sess));
 
 app.engine('handlebars', hbs.engine);

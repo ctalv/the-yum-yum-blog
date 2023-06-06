@@ -1,92 +1,50 @@
-function getRecipe(recipeId) {
-    // Display a placeholder or loading state
-    showPlaceholder();
-  
-    // Make an API request to retrieve the recipe data
-    makeApiRequest('/recipes/' + recipeId)
-      .then(function(response) {
-        // Recipe data retrieved successfully
-        hidePlaceholder();
-        displayRecipe(response.data);
-      })
-      .catch(function(error) {
-        // Error occurred while retrieving the recipe
-        hidePlaceholder();
-        displayErrorMessage(error.message);
-      });
-  }
-  function setupFavoriteButton(recipeId) {
-    // Function to handle the favorite button click
-    const favoriteButton = document.getElementById('favorite-button');
-    favoriteButton.addEventListener('click', function() {
-      // Send an AJAX request to the server to save the favorite recipe
-      fetch('/save-favorite', {
-        method: 'POST',
-        body: JSON.stringify({ recipeId: recipeId }),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-        .then(function(response) {
-          if (response.ok) {
-            alert('Recipe added to favorites!');
-          } else {
-            alert('Failed to add recipe to favorites.');
-          }
-        })
-        .catch(function() {
-          alert('An error occurred while processing the request.');
-        });
-    });
-  }
-  
-  function showPlaceholder() {
-    // Show the placeholder or loading state element
-    const placeholderElement = document.getElementById('placeholder');
-    placeholderElement.style.display = 'block';
-  }
-  
-  function hidePlaceholder() {
-    // Hide the placeholder or loading state element
-    const placeholderElement = document.getElementById('placeholder');
-    placeholderElement.style.display = 'none';
-  }
-  
-  function displayRecipe(recipeData) {
-    // Display the retrieved recipe data on the page
-    const recipeTitleElement = document.getElementById('recipe-title');
-    const recipeIngredientsElement = document.getElementById('recipe-ingredients');
-    const recipeInstructionsElement = document.getElementById('recipe-instructions');
-  
-    recipeTitleElement.textContent = recipeData.title;
-    recipeIngredientsElement.textContent = recipeData.ingredients;
-    recipeInstructionsElement.textContent = recipeData.instructions;
-  }
-  
-  function displayErrorMessage(errorMessage) {
-    // Display an error message on the page
-    const errorMessageElement = document.getElementById('error-message');
-    errorMessageElement.textContent = errorMessage;
+const favoriteBtnEl = document.querySelector('.favorite-btn');
+
+const saveRecipe = async (event) => {
+  event.preventDefault();
+  // Send a POST request to the API endpoint
+  const recipe_id = parseInt(window.location.pathname.split('/').pop());
+  const title = document.querySelector('.title-el').textContent;
+  const image = document.querySelector('.image-el').getAttribute('src');
+  const ingredientEl = document.querySelector('.ingredient-el').children;
+  const instructionEl = document.querySelector('.instruction-el').children;
+  let ingredients = [];
+  let instructions = [];
+
+  for (let j = 0; j < ingredientEl.length; j++) {
+    ingredient = ingredientEl[j].innerHTML
+    ingredients.push(ingredient)
   }
 
-  const saveRecipe = async (event) => {
-    event.preventDefault();
-  
+  ingredients = ingredients.join(' ; ')
 
-      // Send a POST request to the API endpoint
-      const response = await fetch('/dashboard', {
-        method: 'POST',
-        body: JSON.stringify({ email, password }),
-        headers: { 'Content-Type': 'application/json' },
-      });
-  
-      if (response.ok) {
-        // If successful, redirect the browser to the profile page
-        document.location.replace('/dashboard');
-      } else {
-        alert(response.statusText);
-      }
+
+  for (let j = 0; j < instructionEl.length; j++) {
+    let step = instructionEl[j].innerHTML
+    instructions.push(step)
+  }
+  instructions = instructions.join(' ; ')
+  console.log(instructions)
+  // Send a POST request to the API endpoint with the recipe ID
+  // const response = await fetch("/api/recipes", {
+  const response = await fetch("/dashboard", {
+    method: 'POST',
+    body: JSON.stringify({ recipe_id, title, image, ingredients, instructions }),
+    headers: { 'Content-Type': 'application/json' },
+  });
+  // console.log(recipeId)
+  if (response.ok) {
+    // If successful, redirect the browser to the profile page
+    document.location.replace('/dashboard');
+    // console.log(recipeId)
+  } else if (response.error === 'Recipe ID already exists') {
+      // If the recipe ID exists, redirect to the dashboard
+      document.location.replace('/dashboard');
     
-  };
+  } else {
+    alert(response.statusText);
+  }
 
-  document.querySelector("#favorite-button").addEventListener("submit", saveRecipe);
+};
+
+favoriteBtnEl.addEventListener('click', saveRecipe);

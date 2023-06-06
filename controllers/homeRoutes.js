@@ -63,6 +63,7 @@ router.get('/', async (req, res) => {
 
 
         req.session.recipes = recipes;
+        
         // console.log(recipes)
         res.render('homepage', {
           recipes: recipes,
@@ -97,7 +98,8 @@ router.get('/recipe/:id', async (req, res) => {
       ...recipe,
       // logged_in: req.session.logged_in
       ingredients: ingredients,
-      instructions: instructions
+      instructions: instructions,
+      notSaved: req.path.startsWith('/recipe/')
     });
   } catch (err) {
     res.status(500).json(err);
@@ -141,23 +143,39 @@ router.get('/dashboard', withAuth, async (req, res) => {
   }
 })
 
-// post route for saving a recipe
+  
 router.post('/dashboard', async (req, res) => {
+  console.log('/dashboard route triggered');
+  console.log(req.body)
+  const { recipe_id, title, image, ingredients, instructions } = req.body;
   try {
-    const { id, title, image, ingredients, instructions } = req.body;
-    const recipeData = await Recipe.create({
-      id,
-      title,
-      image,
-      ingredients,
-      instructions,
-      user_id: req.session.user_id,
-    });
-    res.status(200).json(recipeData);
+    console.log('1')
+    console.log(recipe_id)
+    const existingRecipe = await Recipe.findByPk(recipe_id);
+console.log(existingRecipe)
+console.log('no')
+    if (existingRecipe) {
+      // If the recipe already exists, return an error message or take appropriate action
+      return res.redirect('/dashboard');
+    } else {
+      const recipeData = await Recipe.create({
+        id: recipe_id,
+        title,
+        image,
+        ingredients,
+        instructions,
+        user_id: req.session.user_id
+      });
+      res.status(200).json(recipeData);
+    }
+    
+ 
+  
+    
   } catch (err) {
-    res.status(400).json(err)
+    res.status(400).json(err + 2)
   }
-});
+  });
 
 router.get('/dashboard/recipe/:id', async (req, res) => {
   try {
