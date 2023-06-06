@@ -15,6 +15,30 @@ function getRecipe(recipeId) {
         displayErrorMessage(error.message);
       });
   }
+  function setupFavoriteButton(recipeId) {
+    // Function to handle the favorite button click
+    const favoriteButton = document.getElementById('favorite-button');
+    favoriteButton.addEventListener('click', function() {
+      // Send an AJAX request to the server to save the favorite recipe
+      fetch('/save-favorite', {
+        method: 'POST',
+        body: JSON.stringify({ recipeId: recipeId }),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(function(response) {
+          if (response.ok) {
+            alert('Recipe added to favorites!');
+          } else {
+            alert('Failed to add recipe to favorites.');
+          }
+        })
+        .catch(function() {
+          alert('An error occurred while processing the request.');
+        });
+    });
+  }
   
   function showPlaceholder() {
     // Show the placeholder or loading state element
