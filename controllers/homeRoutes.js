@@ -20,6 +20,7 @@ router.get('/', async (req, res) => {
       .then(data => {
         // console.log(data);
         // id, title, ingredients, instruction, photo
+        // console.log(data.results.length)
         const recipes = [];
         for (let i = 0; i < data.results.length; i++) {
           let recipeNum = data.results[i];
@@ -124,10 +125,55 @@ router.get('/profile', async (req, res) => {
   }
 });
 
+router.get('/dashboard', withAuth, async (req, res) => {
+  try {
+    const userData = await User.findOne({
+      where: {
+        id: req.session.user_id,
+      },
+      include: [
+        Recipe
+      ]
+    })
+
+    if (!userData) {
+      res.status(404).json({ message: 'No user with that id.' })
+      return
+    }
+    if (!req.session.logged_in) {
+      res.redirect('/login');
+      return;
+    }
+
+    res.render('dashboard', {
+      ...user,
+      logged_in: req.session.logged_in
+    });
+
+    res.status(200).json(userData)
+  } catch (err) {
+    res.status(500).json(err)
+  }
+})
+
+// post route for saving a recipe
+router.post('/save-favorite', async (req, res) => {
+  try {
+    const recipeData = await Recipe.create({
+      // recipe 
+      user_id: req.session.user_id,
+    });
+    res.status(200).json(recipeData);
+  } catch (err) {
+    res.status(400).json(err)
+  }
+});
+
+
 router.get('/login', (req, res) => {
   // If the user is already logged in, redirect the request to another route
   if (req.session.logged_in) {
-    res.redirect('/');
+    res.redirect('/dashboard');
     return;
   }
 
