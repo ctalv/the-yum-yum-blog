@@ -3,9 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const searchInput = document.querySelector('.search-input');
 
   function getData(query) {
-    fetch('/search', {query}).then(function (response) {
-      console.log(response);
-    })
+    window.location.replace('/search/' + query);
   }
 
   document.querySelector('form').addEventListener('submit', function(event) {

@@ -194,9 +194,9 @@ router.get('/dashboard/recipe/:id', async (req, res) => {
   }
 });
 
-router.get('/search', async (req, res) => {
+router.get('/search/:query', async (req, res) => {
   try {
-    const query = req.body.query;
+    const query = req.params.query;
     search_url= url + `&includeIngredients=${query}`
 
     fetch(search_url)
