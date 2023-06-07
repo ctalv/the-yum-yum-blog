@@ -197,6 +197,16 @@ router.get('/dashboard/recipe/:id', async (req, res) => {
   }
 });
 
+router.post('/search', async (req, res) => {
+  try {
+    const recipes = req.body.recipes;
+    res.render('homepage', {
+      recipes: recipes,
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+})
 
 router.get('/login', (req, res) => {
   // If the user is already logged in, redirect the request to another route
