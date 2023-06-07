@@ -61,14 +61,11 @@ router.get('/', async (req, res) => {
           recipes.push(recipe); // Add each recipe to the recipes array
         }
 
-
         req.session.recipes = recipes;
         
-        // console.log(recipes)
         res.render('homepage', {
           recipes: recipes,
         });
-        // res.status(200).json(recipes);
       })
       .catch(error => {
         console.log('Error:', error);
@@ -197,12 +194,59 @@ router.get('/dashboard/recipe/:id', async (req, res) => {
   }
 });
 
-router.post('/search', async (req, res) => {
+router.get('/search/:query', async (req, res) => {
   try {
-    const recipes = req.body.recipes;
-    res.render('homepage', {
-      recipes: recipes,
+    const query = req.params.query;
+    search_url= url + `&includeIngredients=${query}`
+
+    fetch(search_url)
+      .then(response => response.json())
+      .then(data => {
+        const recipes = [];
+        for (let i = 0; i < data.results.length; i++) {
+          let recipeNum = data.results[i];
+
+          let id = recipeNum.id;
+          let title = recipeNum.title;
+          let image = recipeNum.image;
+          let instructionsAll = recipeNum.analyzedInstructions[0].steps
+          let ingredientsAll = recipeNum.missedIngredients;
+          let ingredientArr = [];
+          let instructionArr = [];
+
+          for (let j = 0; j < ingredientsAll.length; j++) {
+            ingredientTotal = `${ingredientsAll[j].amount} ${ingredientsAll[j].unitShort} ${ingredientsAll[j].name}`
+            ingredientArr.push(ingredientTotal)
+          }
+
+          ingredientArr = ingredientArr.join(' ; ')
+
+          for (let j = 0; j < instructionsAll.length; j++) {
+            let step = instructionsAll[j].step
+            instructionArr.push(step)
+          }
+          instructionArr = instructionArr.join(' ; ')
+
+          // console.log(ingredientArr);
+          // console.log(instructionArr);
+          // console.log(id, title, image);
+
+          let recipe = {
+            id: id,
+            title: title,
+            image: image,
+            ingredients: ingredientArr,
+            instructions: instructionArr
+          };
+
+          recipes.push(recipe); // Add each recipe to the recipes array
+        }
+
+        res.render('homepage', {
+          recipes: recipes,
+      })
     });
+
   } catch (err) {
     res.status(500).json(err);
   }
