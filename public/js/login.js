@@ -32,12 +32,13 @@ const clearFormInputs = () => {
   // Signup form handler
   const signupFormHandler = async (event) => {
     event.preventDefault();
-  
+  console.log(01)
     const displayName = document.querySelector("#display_name").value.trim();
     const email = document.querySelector("#email-signup").value.trim();
     const password = document.querySelector("#new-password-signup").value.trim();
   
     if (displayName && email && password) {
+      console.log(02)
       const response = await fetch("/api/users", {
         method: "POST",
         body: JSON.stringify({ displayName, email, password }),
@@ -45,6 +46,7 @@ const clearFormInputs = () => {
       });
   
       if (response.ok) {
+        console.log(03)
         // Get the display name from the response
         const responseData = await response.json();
         const savedDisplayName = responseData.display_name;

@@ -27,7 +27,11 @@
     <nav>
       <div class="button-container">
         <a href="/" class="btn">Home</a>
+        {{#if logged_in}}
+        <a href="/logout" class="btn">Logout</a>
+        {{else}}
         <a href="/login" class="btn">Login</a>
+        {{/if}}
         <a href="/dashboard" class="btn">List Recipes</a>
         <span id="username"></span>
       </div>

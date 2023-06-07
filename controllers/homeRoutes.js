@@ -12,15 +12,12 @@ const fillIngredients = true;
 
 const url = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&query=${mainCourseQuery}&addRecipeInformation=${addRecipeInformation}&fillIngredients=${fillIngredients}`;
 
-// display recipes
+// display a recipe on homepage
 router.get('/', async (req, res) => {
   try {
     fetch(url)
       .then(response => response.json())
       .then(data => {
-        // console.log(data);
-        // id, title, ingredients, instruction, photo
-        // console.log(data.results.length)
         const recipes = [];
         for (let i = 0; i < data.results.length; i++) {
           let recipeNum = data.results[i];
@@ -44,11 +41,7 @@ router.get('/', async (req, res) => {
             let step = instructionsAll[j].step
             instructionArr.push(step)
           }
-          instructionArr = instructionArr.join(' ; ')
-
-          // console.log(ingredientArr);
-          // console.log(instructionArr);
-          // console.log(id, title, image);
+          instructionArr = instructionArr.join(' ; ');
 
           let recipe = {
             id: id,
@@ -77,23 +70,16 @@ router.get('/', async (req, res) => {
 });
 
 
-// const urlTwo = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&query=${mainCourseQuery}&addRecipeInformation=${addRecipeInformation}&fillIngredients=${fillIngredients}`;
-
+// to view an individual recipe
 router.get('/recipe/:id', async (req, res) => {
   try {
     const recipeId = await req.params.id
     const recipes = await req.session.recipes;
-    // console.log(recipe.id)
     const recipe = recipes.find(recipe => recipe.id === parseInt(recipeId));
     const ingredients = recipe.ingredients.split(' ; ');
     const instructions = recipe.instructions.split(' ; ');
-    console.log(ingredients)
-    console.log(recipe)
-    // const recipe = recipeData.get({ plain: true });
-    // res.status(200).json(recipe);
     res.render('recipe', {
       ...recipe,
-      // logged_in: req.session.logged_in
       ingredients: ingredients,
       instructions: instructions,
       notSaved: req.path.startsWith('/recipe/')
@@ -103,7 +89,7 @@ router.get('/recipe/:id', async (req, res) => {
   }
 });
 
-
+// show a logged in user's saved recipes
 router.get('/dashboard', withAuth, async (req, res) => {
   try {
     const userData = await User.findOne({
@@ -112,8 +98,6 @@ router.get('/dashboard', withAuth, async (req, res) => {
       },
       attributes: { exclude: ['password'] },
       include: [{ model: Recipe }]
-
-
     })
 
     if (!userData) {
@@ -126,8 +110,6 @@ router.get('/dashboard', withAuth, async (req, res) => {
     }
 
     const user = userData.get({ plain: true });
-    const recipes = user.Recipes;
-    console.log(recipes);
 
     res.render('dashboard', {
       ...user,
@@ -140,17 +122,11 @@ router.get('/dashboard', withAuth, async (req, res) => {
   }
 })
 
-  
+// save recipe for a user
 router.post('/dashboard', async (req, res) => {
-  console.log('/dashboard route triggered');
-  console.log(req.body)
   const { recipe_id, title, image, ingredients, instructions } = req.body;
   try {
-    console.log('1')
-    console.log(recipe_id)
     const existingRecipe = await Recipe.findByPk(recipe_id);
-console.log(existingRecipe)
-console.log('no')
     if (existingRecipe) {
       // If the recipe already exists, return an error message or take appropriate action
       return res.redirect('/dashboard');
@@ -166,14 +142,12 @@ console.log('no')
       res.status(200).json(recipeData);
     }
     
- 
-  
-    
   } catch (err) {
     res.status(400).json(err + 2)
   }
   });
 
+// to view an individual saved recipe
 router.get('/dashboard/recipe/:id', async (req, res) => {
   try {
     const recipeData = await Recipe.findByPk(req.params.id)
@@ -193,6 +167,7 @@ router.get('/dashboard/recipe/:id', async (req, res) => {
     res.status(500).json(err);
   }
 });
+
 
 router.get('/search/:query', async (req, res) => {
   try {
@@ -225,11 +200,7 @@ router.get('/search/:query', async (req, res) => {
             let step = instructionsAll[j].step
             instructionArr.push(step)
           }
-          instructionArr = instructionArr.join(' ; ')
-
-          // console.log(ingredientArr);
-          // console.log(instructionArr);
-          // console.log(id, title, image);
+          instructionArr = instructionArr.join(' ; ');
 
           let recipe = {
             id: id,
