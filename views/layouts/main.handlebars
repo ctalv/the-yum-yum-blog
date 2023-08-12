@@ -28,7 +28,7 @@
       <div class="button-container">
         <a href="/" class="btn">Home</a>
         {{#if logged_in}}
-        <a href="/" class="btn">Logout</a>
+        <a id="logout" href="/" class="btn">Logout</a>
         {{else}}
         <a href="/login" class="btn">Login</a>
         {{/if}}
@@ -53,7 +53,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.min.js"
     integrity="sha512-vl4Q1QvnGnuW6qyTMbiEEm3HseFQ"></script>
   <script src="/js/index.js"></script>
-  <script src="/js/login.js"></script>
 
   <!-- Render script for logged in users only -->
   {{#if logged_in}}
