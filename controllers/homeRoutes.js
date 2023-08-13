@@ -58,6 +58,7 @@ router.get('/', async (req, res) => {
         
         res.render('homepage', {
           recipes: recipes,
+      logged_in: req.session.logged_in,
         });
       })
       .catch(error => {
@@ -82,7 +83,8 @@ router.get('/recipe/:id', async (req, res) => {
       ...recipe,
       ingredients: ingredients,
       instructions: instructions,
-      notSaved: req.path.startsWith('/recipe/')
+      notSaved: req.path.startsWith('/recipe/'),
+      logged_in: req.session.logged_in,
     });
   } catch (err) {
     res.status(500).json(err);

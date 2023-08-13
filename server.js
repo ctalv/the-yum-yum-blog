@@ -34,8 +34,9 @@ const sess = {
   };
 
 // middleware
-app.use(bodyParser.json());
 app.use(session(sess));
+app.use(bodyParser.json());
+
 
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
