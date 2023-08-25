@@ -3,7 +3,7 @@ const fetch = require('node-fetch');
 const withAuth = require('../utils/auth');
 require('dotenv').config();
 
-const { Recipe, User } = require('../models');
+const { Recipe, User, SavedRecipes } = require('../models');
 
 apiKey = process.env.API_KEY;
 const mainCourseQuery = 'main course';
@@ -14,6 +14,8 @@ const url = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&
 
 // display a recipe on homepage
 router.get('/', async (req, res) => {
+
+
   try {
     fetch(url)
       .then(response => response.json())
@@ -51,6 +53,8 @@ router.get('/', async (req, res) => {
             instructions: instructionArr
           };
 
+          console.log(recipe)
+
           recipes.push(recipe); // Add each recipe to the recipes array
         }
 
@@ -74,9 +78,12 @@ router.get('/', async (req, res) => {
 // to view an individual recipe
 router.get('/recipe/:id', async (req, res) => {
   try {
-    const recipeId = await req.params.id
+    console.log(req.params)
+    const recipeId = await req.params.id;
     const recipes = await req.session.recipes;
-    const recipe = recipes.find(recipe => recipe.id === parseInt(recipeId));
+    // console.log(req.session.recipes)
+    const recipe = await recipes.find(recipe => recipe.id === parseInt(recipeId));
+    // console.log(recipe)
     const ingredients = recipe.ingredients.split(' ; ');
     const instructions = recipe.instructions.split(' ; ');
     res.render('recipe', {
@@ -91,15 +98,17 @@ router.get('/recipe/:id', async (req, res) => {
   }
 });
 
+
 // show a logged in user's saved recipes
 router.get('/dashboard', withAuth, async (req, res) => {
   try {
+    // console.log(SavedRecipes)
     const userData = await User.findOne({
       where: {
         id: req.session.user_id,
       },
       attributes: { exclude: ['password'] },
-      include: [{ model: Recipe }]
+      include: [{ model: Recipe, through: SavedRecipes }]
     })
 
     if (!userData) {
@@ -144,13 +153,22 @@ router.post('/dashboard', async (req, res) => {
       res.status(200).json(recipeData);
     }
     
+    await SavedRecipes.create({
+      user_id: req.session.user_id,
+      recipe_id: recipe_id,
+      title,
+      image,
+      ingredients, 
+      instructions
+    });
+
   } catch (err) {
-    res.status(400).json(err + 2)
+    res.status(400).json(err)
   }
   });
 
 // to view an individual saved recipe
-router.get('/dashboard/recipe/:id', async (req, res) => {
+router.get('/dashboard/recipe/:id', withAuth, async (req, res) => {
   try {
     const recipeData = await Recipe.findByPk(req.params.id)
 
@@ -159,11 +177,29 @@ router.get('/dashboard/recipe/:id', async (req, res) => {
     const instructions = recipe.instructions.split(' ; ');
     // const recipe = recipeData.get({ plain: true });
     // res.status(200).json(recipe);
+
+    let isSaved = false;
+    // if (req.session.logged_in) {
+      const user = await User.findByPk(req.session.user_id);
+      if (user) {
+        const savedRecipe = await SavedRecipes.findOne({
+          where: {
+            user_id: user.id,
+            recipe_id: recipe.id
+          }
+        });
+        if (savedRecipe) {
+          isSaved = true;
+        }
+      }
+    // }
+
     res.render('recipe', {
       ...recipe,
       logged_in: req.session.logged_in,
       ingredients: ingredients,
-      instructions: instructions
+      instructions: instructions,
+      is_saved: isSaved
     });
   } catch (err) {
     res.status(500).json(err);
@@ -212,11 +248,16 @@ router.get('/search/:query', async (req, res) => {
             instructions: instructionArr
           };
 
+
           recipes.push(recipe); // Add each recipe to the recipes array
         }
 
+        req.session.recipes = recipes;
+
         res.render('homepage', {
           recipes: recipes,
+      logged_in: req.session.logged_in
+
       })
     });
 
