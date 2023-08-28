@@ -1,10 +1,10 @@
 // import required modules
 const sequelize = require('../config/connection');
-const { User, Comment, Recipe } = require('../models');
+const { User, Recipe, SavedRecipes } = require('../models');
 
 // import JSON seed files
 const userData = require('./userData.json');
-const commentData = require('./commentData.json');
+// const commentData = require('./commentData.json');
 const recipeData = require('./recipeData.json')
 
 // seeds the database
@@ -17,7 +17,7 @@ const seedDatabase = async () => {
   });
 
   await Recipe.bulkCreate(recipeData);
-  await Comment.bulkCreate(commentData);
+  // await Comment.bulkCreate(commentData);
   // terminate the script and exit the Node.js process
   process.exit(0);
 };

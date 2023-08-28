@@ -1,17 +1,17 @@
 const User = require('./User');
-const Comment = require('./Comment');
+// const Comment = require('./Comment');
 const Recipe = require('./Recipe');
 const SavedRecipes = require('./SavedRecipes')
 
 SavedRecipes.belongsTo(User, {
   foreignKey: 'user_id', 
-  targetKey: 'recipe_id', 
+  targetKey: 'id', 
   as: 'User'
 })
 
 SavedRecipes.belongsTo(Recipe, {
   foreignKey: 'recipe_id', 
-  targetKey: 'user_id', 
+  targetKey: 'id', 
   as: 'Recipe'
 })
 
@@ -36,26 +36,26 @@ Recipe.belongsToMany(User, {
 });
 
 // User has many Comment
-User.hasMany(Comment, {
-  foreignKey: 'user_id',
-  sourceKey: 'id'
-});
+// User.hasMany(Comment, {
+//   foreignKey: 'user_id',
+//   sourceKey: 'id'
+// });
 
 // Comment has one User
-Comment.belongsTo(User, {
-  foreignKey: 'user_id',
-});
+// Comment.belongsTo(User, {
+//   foreignKey: 'user_id',
+// });
 
 // Recipe has many Comment
-Recipe.hasMany(Comment, {
-  foreignKey: 'recipe_id',
-  sourceKey: 'id'
-});
+// Recipe.hasMany(Comment, {
+//   foreignKey: 'recipe_id',
+//   sourceKey: 'id'
+// });
 
 // Comment belongs to Recipe
-Comment.belongsTo(Recipe, {
-  foreignKey: 'recipe_id',
-});
+// Comment.belongsTo(Recipe, {
+//   foreignKey: 'recipe_id',
+// });
 
 
-module.exports = { User, Comment, Recipe };
+module.exports = { User, Recipe, SavedRecipes };

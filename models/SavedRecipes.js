@@ -41,4 +41,4 @@ SavedRecipes.init(
 
 
 // export model
-module.exports = Recipe;
+module.exports = SavedRecipes;
