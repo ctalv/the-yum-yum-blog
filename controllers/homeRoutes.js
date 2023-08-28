@@ -122,6 +122,8 @@ router.get('/dashboard', withAuth, async (req, res) => {
 
     const user = userData.get({ plain: true });
 
+    console.log(user)
+
     res.render('dashboard', {
       ...user,
       logged_in: req.session.logged_in
@@ -134,10 +136,14 @@ router.get('/dashboard', withAuth, async (req, res) => {
 })
 
 // save recipe for a user
-router.post('/dashboard', async (req, res) => {
+router.post('/dashboard', withAuth, async (req, res) => {
   const { recipe_id, title, image, ingredients, instructions } = req.body;
   try {
-    const existingRecipe = await Recipe.findByPk(recipe_id);
+    console.log(req.body)
+    console.log(SavedRecipes)
+    console.log(Recipe)
+    const existingRecipe = await SavedRecipes.findByPk(recipe_id);
+    console.log(existingRecipe)
     if (existingRecipe) {
       // If the recipe already exists, return an error message or take appropriate action
       return res.redirect('/dashboard');
