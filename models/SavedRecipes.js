@@ -3,9 +3,7 @@ const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 
 // class constructor
-class SavedRecipes extends Model {
-
-}
+class SavedRecipes extends Model {}
 
 // define model
 SavedRecipes.init(
@@ -14,6 +12,7 @@ SavedRecipes.init(
             type: DataTypes.INTEGER,
             allowNull: false,
             primaryKey: true,
+            autoIncrement: true,
         },
         recipe_id: {
             type: DataTypes.INTEGER,
@@ -28,7 +27,7 @@ SavedRecipes.init(
                 model: 'user',
                 key: 'id',
             },
-        },
+        }
     },
     {
         sequelize,

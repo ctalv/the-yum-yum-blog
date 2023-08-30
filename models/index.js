@@ -19,7 +19,7 @@ SavedRecipes.belongsTo(Recipe, {
 User.belongsToMany(Recipe, { 
   as: 'UserSaveRecipe',
   through: SavedRecipes,
-  foreignKey: 'recipe_id'
+  foreignKey: 'user_id'
   // through: 'SavedRecipes',
   // foreignKey: 'recipe_id',
   // otherKey: 'user_id'
@@ -29,9 +29,9 @@ User.belongsToMany(Recipe, {
 Recipe.belongsToMany(User, {
   as: 'RecipeSaveUser',
   through: SavedRecipes,
-  foreignKey: 'user_id'
+  foreignKey: 'recipe_id'
   // through: 'SavedRecipes',
-  // foreignKey: 'user_id',
+  // foreignKey: 'user_id'
   // otherKey: 'recipe_id'
 });
 

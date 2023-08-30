@@ -3,9 +3,7 @@ const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 
 // class constructor
-class Recipe extends Model {
-
-}
+class Recipe extends Model {}
 
 // define model
 Recipe.init(
@@ -30,14 +28,7 @@ Recipe.init(
         instructions: {
             type: DataTypes.TEXT,
             allowNull: false
-        },
-        user_id: {
-            type: DataTypes.INTEGER,
-            references: {
-                model: 'user',
-                key: 'id',
-            },
-        },
+        }
     },
     {
         sequelize,

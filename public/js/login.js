@@ -25,20 +25,21 @@ const clearFormInputs = () => {
   
       if (response.ok) {
         // If successful, redirect the browser to the profile page
+        console.log(response)
+
         document.location.replace('/dashboard');
       } else {
-        console.log(response)
-        alert(response);
+        alert(response.statusText);
       }
     }
 
-    const data = sessionStorage.getItem('key');
+//     const data = sessionStorage.getItem('key');
 
-if (data) {
-  console.log('Data found in session storage:', data);
-} else {
-  console.log('No data found in session storage.');
-} 
+// if (data) {
+//   console.log('Data found in session storage:', data);
+// } else {
+//   console.log('No data found in session storage.');
+// } 
   };
 
   // Signup form handler
