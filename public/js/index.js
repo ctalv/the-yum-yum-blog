@@ -6,3 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
       pause: 'hover' // Pause the carousel on mouse hover
     });
   });
+
+  // Example of verifying session storage usage in a front-end JavaScript file
+// This code assumes you've set some data in session storage
+

@@ -21,7 +21,6 @@ const hbs = exphbs.create({ });
 const sess = {
     secret: 'Super secret secret',
     cookie: {
-      maxAge: 300000,
       httpOnly: true,
       secure: false,
       sameSite: 'strict',
@@ -34,8 +33,9 @@ const sess = {
   };
 
 // middleware
-app.use(bodyParser.json());
 app.use(session(sess));
+app.use(bodyParser.json());
+
 
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
